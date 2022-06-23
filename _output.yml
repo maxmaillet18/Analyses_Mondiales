@@ -7,7 +7,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Mini Bookdown Tutorial</a></li>
+        <li><a href="./">Retour à la première page</a></li>
       after: |
         <li><a href="https://mmaillet.shinyapps.io/Analyses_Mondiales/?_ga=2.2516208.1524096991.1655824260-1647850945.1655373829" target="blank">ShinyApp</a></li>
     edit: https://github.com/jules32/bookdown-tutorial/edit/master/%s
