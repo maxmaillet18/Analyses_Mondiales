@@ -1,6 +1,6 @@
 ---
 title: "TP R CEFIM 2022 - Analyse mondiale"
-author: "Edouard GAUDIN"
+author: "Maxime Maillet"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: 
   html_document:
@@ -488,9 +488,9 @@ population_pays<-population |>
   arrange(pays)
 
 # on exporte en csv pour les réutiliser
-write_csv(population_pays, "population_pays.csv")
-write_csv(energie_pays, "energie_pays.csv")
-write_csv(nourriture_pays, "nourriture_pays.csv")
+# write_csv(population_pays, "population_pays.csv")
+# write_csv(energie_pays, "energie_pays.csv")
+# write_csv(nourriture_pays, "nourriture_pays.csv")
 
 # save(nourriture_pays, file="nourriture_pays.rdata")
 # save(population_pays, file="population_pays.rdata")
@@ -552,10 +552,18 @@ population_carte <-left_join(population |> filter(Type=="Country/Area"),world_ma
 # write_csv(energie_carte, "energie_carte.csv")
 # write_csv(nourriture_carte, "nourriture_carte.csv")
 
-save(nourriture_carte, file="nourriture_carte.rdata")
-save(population_carte, file="population_carte.rdata")
-save(energie_carte, file="energie_carte.rdata")
+# save(nourriture_carte, file="nourriture_carte.rdata")
+# save(population_carte, file="population_carte.rdata")
+# save(energie_carte, file="energie_carte.rdata")
+
 
 ```
 
+# Application shiny
+
+```{r}
+
+knitr::include_app( "https://mmaillet.shinyapps.io/Analyses_Mondiales/?_ga=2.98854366.1524096991.1655824260-1647850945.1655373829")
+
+```
 
