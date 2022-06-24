@@ -35,6 +35,8 @@ library(countrycode)
 
 ## Population
 
+la population mondiale augmente de façon presque constante depuis 1960 avec une évolution maximal dans les années 90
+
 ```{r POPULATION NETTOYAGE}
 
 # lecture du fichier population, on supprimer les 16 premières lignes et on passe les "..." en NA
@@ -55,6 +57,7 @@ population<-read_xlsx("Population.xlsx",
   mutate(annee=as.integer(annee))
 
 ```
+
 
 ```{r POPULATION GRAPHIQUE}
 
@@ -112,6 +115,8 @@ type_energie<-c("fossil_fuel", "low_carbon")
 
 ```
 
+on constate une augmentation presque constante depuis 1965 de la consommation d’énergie, le pétrole , le charbon et le gaz sont les 3 sources d'énergies les plus représentées 
+
 ```{r ENERGIE GRAPHIQUE}
 
 # on filtre pour garder les données mondiales, on récupère uniquement les sources d'énergie
@@ -145,6 +150,8 @@ ggplot(energie_source)+
   scale_fill_viridis_d()
 
 ```
+
+On observe aussi une sur représentation de la consommation d'énergie fossile 
 
 ``` {r ENERGIE GRAPHIQUE 2}  
 
@@ -209,6 +216,8 @@ nourriture<-read_delim("Nourriture.csv", locale=locale(encoding = "ISO-8859-1"))
 
 ```
 
+Dans le même temps on observe aussi une augmentation de la production de nourriture dans les mêmes proportions pour chaque produit , une augmention qui semble être proportionnelle à l'augmentation de la population
+
 ```{r NOURRITURE GRAPHIQUE}
 
 # Création du graphique de la nourriture mondiale
@@ -251,6 +260,8 @@ iso_clean<-iso |>
 
 ## Population
 
+En comparaison avec l'Asie qui a une population qui a triplé et avec l'Afrique qui a une population qui a doublé les autres continents semble avoir une population presque constante entre 1950 et 2020
+
 ```{r POPULATION CONTINENT GRAPHIQUE}
 
 # Création du graphiqueen filtrant sur les continents ("region")
@@ -289,6 +300,8 @@ energie_continent<-inner_join(energie,iso_clean,by=c("iso_code"="alpha-3")) |>
 
 ```
 
+on peut voir que l'Asie a une augmentation de la consommation d'énergie beaucoup plus forte que les autre et que l'Europe malgrès un pic de consommation en 1984 en particulier la consommation du biofuel, à une consommation plutôt constante
+
 ```{r ENERGIE CONTINENTALE PAR SOURCE D_ENERGIE}
 
 #  création du graphique par source d'énergie
@@ -315,6 +328,8 @@ ggplot(energie_continent |> filter(energie %in% source_energie))+
 
 
 ```
+
+On peut voir que les continent ayant la plus grosse augmentation utilise en proportion plus d’énergie fossile que les autres
 
 ```{r ENERGIE CONTINENTALE PAR TYPE D_ENERGIE}
 
@@ -343,6 +358,8 @@ ggplot(energie_continent |> filter(energie %in% type_energie))+
 
 ## Nourriture
 
+Dans le même temps la production de nourriture augmente partout sauf en *Europe*
+
 ```{r GRAPHIQUE NOURRITURE}
 
 # Création du graphique de la nourriture en filtrant les continents
@@ -368,7 +385,11 @@ ggplot(nourriture |> filter(pays %in% c("Americas", "Asia", "Oceania", "Europe",
 
 # Analyse par pays
 
+Après une analyse pour chaque années nous avons déterminé que l'année la plus récente avec les données les plus complètes était l'année 2016, nous vous présenterons donc des cartes reprénsentant l'année 2016, pour voir les informations pour les autres années , un lien vers notre shinyapp est disponible a la fin de ce document.
+
 ## Population
+
+on voit que les 2 pays les plus peuplés , très largement par rapport aux autres , sont la Chine et l'Inde
 
 ```{r CARTE CHOROPLETHE POPULATION}
 
@@ -379,7 +400,7 @@ world_map<-map_data("world") |>
 
 
 # on filtre pour avoir les pays et la dernière année
-population_pays<-population|> filter(Type=="Country/Area" & annee==2020)
+population_pays<-population|> filter(Type=="Country/Area" & annee==2016)
 # jointure entre le tableau des pays et les coordonnées
 population_coord <-left_join(population_pays,world_map,by=c("Country code"="iso_code")) 
 
@@ -397,6 +418,8 @@ ggplot(population_coord)+
 ```
 
 ## Energie
+
+Les 2 pays les plus consommateur d'énergie sont la Chine et les Etats-Unis
 
 ```{r CARTE CHOROPLETHE ENERGIE}
 
@@ -432,11 +455,13 @@ ggplot(energie_carte)+
 
 ## Nourriture
 
+On voit que les plus grand producteurs de nourriture sont la Chine, L'Inde, le Brésil et les Etats-Unis, qui sont aussi les pays les plus peuplés
+
 ```{r CARTE CHOROPLETHE NOURRITURE}
 
 # on filtre sur l'année 2020
 nourriture_2020 <- nourriture |>
-  filter(annee == 2020) |> 
+  filter(annee == 2016) |> 
   group_by(pays) |> 
   summarise(valeur = sum(valeur, na.rm = TRUE)) |> # on fait la somme de tous les produits
   filter(valeur != 0) |> 
@@ -459,7 +484,6 @@ ggplot(nourriture_map)+
         axis.title = element_blank())
 
 ```
-
 
 
 # Application shiny
